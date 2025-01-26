@@ -1,0 +1,46 @@
+# Diagram Analysis 2
+
+## New Features:
+- **Validation**: Added validation for user email format and post title length.
+- **New Models**: Created a `Comment` model that is related to the `Post` model.
+- **Updated Relationships**: Post now has many comments, creating a one-to-many relationship between Post and Comment.
+
+# models.py
+from django.core.exceptions import ValidationError
+
+class Post(models.Model):
+    title = models.CharField(max_length=200)
+
+    def clean(self):
+        if len(self.title) < 5:
+            raise ValidationError('Title must be at least 5 characters long.')
+
+# serializers.py (Validation)
+from rest_framework import serializers
+from .models import User, Post
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email']
+    
+    def validate_email(self, value):
+        if '@' not in value:
+            raise serializers.ValidationError("Email must contain '@'.")
+        return value
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['id', 'user', 'title', 'content']
+    
+    def validate_title(self, value):
+        if len(value) < 5:
+            raise serializers.ValidationError("Title must be at least 5 characters long.")
+        return value
+
+# Relating Diagrams to the Enhanced API
+
+- The `/comments` endpoint has been added to handle comments for posts.
+- Validation is applied to ensure that post titles are at least 5 characters long, and user emails are validated.
+- The `Comment` model has been added to support a one-to-many relationship with the `Post` model, indicating that each post can have multiple comments.
