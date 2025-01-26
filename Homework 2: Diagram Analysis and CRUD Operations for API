@@ -1,0 +1,62 @@
+# Diagram Analysis 1
+
+## API Endpoints:
+- **GET /users**: Returns a list of all users.
+- **POST /users**: Creates a new user.
+- **GET /users/{id}**: Retrieves a user by ID.
+- **PUT /users/{id}**: Updates a user.
+- **DELETE /users/{id}**: Deletes a user.
+
+## Models:
+- **User Model**:
+  - Fields: `id`, `username`, `email`
+- **Post Model**:
+  - Fields: `id`, `user (FK)`, `title`, `content`
+
+## Relationships:
+- **User and Post**: A one-to-many relationship, where one user can have many posts.
+
+# models.py
+from django.db import models
+
+class User(models.Model):
+    username = models.CharField(max_length=100)
+    email = models.EmailField()
+
+class Post(models.Model):
+    user = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+
+# serializers.py
+from rest_framework import serializers
+from .models import User, Post
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email']
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['id', 'user', 'title', 'content']
+
+# views.py
+from rest_framework import viewsets
+from .models import User, Post
+from .serializers import UserSerializer, PostSerializer
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+# Relating Diagrams to the API
+
+- The `/users` endpoint is implemented using the `UserViewSet` class, which handles CRUD operations for the `User` model.
+- The `/posts` endpoint is implemented using the `PostViewSet` class, which handles CRUD operations for the `Post` model.
+- The `Post` model has a foreign key relationship with the `User` model, reflecting the one-to-many relationship between users and posts.
