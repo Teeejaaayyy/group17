@@ -1,0 +1,63 @@
+# Milestone 1: Building the Foundation - Creating the Base API
+
+## Unified Reflective Essay
+
+### System Integration
+The Connectly API is designed with multiple components that work together seamlessly. The **client application** sends requests to the **API layer**, which processes these requests and interacts with the **database**. A dedicated **security layer** ensures that only authorized users can access or modify the data. This integration demonstrates the importance of coordination among different components to create a reliable and efficient system.
+
+### Data Handling
+Throughout this phase, we learned that:
+- **Input validation** is crucial to prevent errors and ensure data integrity.
+- **Error handling** provides clear feedback to users through proper HTTP status codes and messages.
+- Efficient data processing contributes to overall system reliability.
+
+### Security Enhancements
+To protect user data and ensure system integrity, we implemented several security features:
+- **HTTPS** ensures that data transmitted over the network is encrypted.
+- **Token validation** confirms that only authorized users can access protected routes.
+- **Access control** further restricts unauthorized modifications.
+These measures significantly improve the API’s security and reliability.
+
+### Design Patterns
+We integrated two primary design patterns into our API:
+- The **Singleton pattern** guarantees that only one instance of critical services (like the database connection) exists at any time.
+- The **Factory pattern** allows for the dynamic creation of objects based on provided parameters, enhancing modularity and scalability.
+Both patterns play a key role in ensuring the API is maintainable and scalable.
+
+### Big Picture
+The project reinforced several key takeaways:
+- **Team Collaboration:** Effective communication and collaboration are essential to building a robust system.
+- **System Integration:** Each component, from the client interface to the security measures, is integral to the overall functionality.
+- **Data Integrity and Security:** Rigorous validation and robust security features are non-negotiable for a reliable API.
+- **Design Patterns:** Using established patterns like Singleton and Factory contributes to a modular, scalable architecture.
+
+## API Review & Finalization
+- **Security Features:** HTTPS, token validation, and access control are fully implemented.
+- **CRUD Operations:** All operations adhere to strict input validation logic.
+- **Design Patterns:** Singleton and Factory patterns are correctly integrated.
+- **Testing:** The API was thoroughly tested to ensure it meets course requirements and functions as designed.
+
+## Table of Contributions
+
+| **Team Member**           | **Role in Reflection and API Development**                                       | **Draft Reflection Link**                                                                                                         |
+|---------------------------|------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| Thriastan Jeanne Bosing   | Worked on token validation and API security features.                            | [Thriastan's Reflection](https://docs.google.com/document/d/1IBULTCS9fnmC82gbhzslDSJ5GBZDd3Jyc938cHSRaWI/edit?usp=sharing)    |
+| Louie Anthony Toledo      | Developed data validation logic and contributed to implementing design patterns.   | [Louie's Reflection](https://docs.google.com/document/d/1fPGYbz_t1dNQdqonKXD1J0zayEFO2pHux4GD3o6c6aw/edit?usp=sharing)        |
+
+## System Architecture Diagram
+
+```plaintext
++---------------------+       +---------------------+       +---------------------+
+|  Client Application | <---> |  API Gateway        | <---> |  Microservices      |
+|  (Web/Mobile)       |       |  (Authentication,   |       |  (User Service,     |
+|                     |       |  Rate Limiting,     |       |  Product Service,   |
+|                     |       |  Load Balancing)    |       |  Order Service)     |
++---------------------+       +---------------------+       +---------------------+
+        |                           |                           |
+        |                           |                           |
+        v                           v                           v
++---------------------+       +---------------------+       +---------------------+
+|  Database           |       |  External Services  |       |  Logging &          |
+|  (SQL/NoSQL)        |       |  (Payment Gateway,  |       |  Monitoring         |
+|                     |       |  Email Service)     |       |  Services           |
++---------------------+       +---------------------+       +---------------------+
